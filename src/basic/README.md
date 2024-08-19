@@ -14,8 +14,6 @@ The program is introduced line by line, so first we introduce the following inpu
 10 PRINT "HELLO, WORLD!"
 ```
 
-The spaces are optional, they make the program more readable, but could slow you down when typing.
-
 When you are done introducing the line, press the `enter` key to accept it.
 The first number in the line is the line number, it is used to reference the line in the program, and is mandatory.
 After the line number we have the statement, in this case `PRINT`, which prints the string that follows it,

@@ -3,5 +3,3 @@ authors = ["Ricardo Maurizio Paul"]
 language = "en"
 multilingual = false
 src = "src"
-title = "Sharp PC-1500 Notes"
-description = "Notes about the Sharp PC-1500 pocket computer"
