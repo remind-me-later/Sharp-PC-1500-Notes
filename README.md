@@ -18,3 +18,5 @@ To view the book, on the default browser, run:
 ```sh
 mdbook build -o
 ```
+
+A full list of commands can be found [here](https://rust-lang.github.io/mdBook/).
