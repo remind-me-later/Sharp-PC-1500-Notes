@@ -1,6 +1,6 @@
 # BASIC Commands and Memory Address
 
-### BASIC Command List:
+## BASIC Command List:
 
 | Command    | Internal Code | Description                                  |
 | ---------- | ------------- | -------------------------------------------- |
@@ -126,10 +126,10 @@
 | `WAIT`     | F1B3H         | Pauses execution until condition met         |
 | `ZONE`     | F0B4H         | Sets tabulation zone for printing            |
 
-### System Subroutines List
+## System Subroutines List
 
 
-## 1. Character Functions
+### 1. Character Functions
 
 | Name                      | Memory Address | Description                                                                       |
 | ------------------------- | -------------- | --------------------------------------------------------------------------------- |
@@ -144,7 +144,7 @@
 
 ---
 
-## 2. Arithmetic Operations
+### 2. Arithmetic Operations
 
 | Name       | Memory Address | Description                                                                |
 | ---------- | -------------- | -------------------------------------------------------------------------- |
@@ -169,20 +169,20 @@
 | INT        | F5BEH          | Returns the integer portion of a number, discarding any fractional part    |
 | Power Rise | F89CH          | Raises a number to a specified power                                       |
 
-![Arithmetic Operations Table](../../images/basic/Preparation_String_For_Comparing.png)
+![Arithmetic Operations Table](./../images/basic/Preparation_String_For_Comparing.png)
 ---
 
-## 3. Compare
+### 3. Compare
 
 | Name                        | Memory Address | Description                                                      |
 | --------------------------- | -------------- | ---------------------------------------------------------------- |
 | Numerical Comparison        | D0D2H          | Compares two numeric values and returns a result                 |
 | Character String Comparison | D0F9H          | Compares two strings lexicographically to determine order        |
 
-![Compare String Memory Content](../../images/basic/Arithmetic_Subroutines_Table.png)
+![Compare String Memory Content](./../images/basic/Arithmetic_Subroutines_Table.png)
 ---
 
-## 4. Search
+### 4. Search
 
 | Name               | Memory Address | Description                                                   |
 | ------------------ | -------------- | ------------------------------------------------------------- |
@@ -193,7 +193,7 @@
 
 ---
 
-## 5. Display
+### 5. Display
 
 | Name                                     | Memory Address |Description|
 | ---------------------------------------- | -------------- | ----------------------------------------------------- |
@@ -207,7 +207,7 @@
 
 ---
 
-## 6. Printer Related
+### 6. Printer Related
 
 | Name                     | Memory Address | Description                                                |
 | ------------------------ | -------------- | ---------------------------------------------------------- |
@@ -223,7 +223,7 @@
 
 ---
 
-## 7. Cassette Tape
+### 7. Cassette Tape
 
 | Name                | Memory Address | Description                                                       |
 | ------------------- | -------------- | ----------------------------------------------------------------- |
