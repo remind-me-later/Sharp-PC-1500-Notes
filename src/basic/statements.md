@@ -4,6 +4,7 @@ First of all, let’s ask ourselves: **what is a statement?**
 
 A **statement** is a line of code or expression that performs a specific action or operation. Each statement is an instruction to the computer that tells it what to do, whether it’s executing a calculation, manipulating data, controlling program flow, or interacting with the user.
 There are different types of statements: 
+
 - Assignment Statements , such as `A = B + C`
 
 - Control Flow Statements, such as conditional statements (`IF`, `ELSE`) and loops (`FOR`, `WHILE`, `REPEAT`).
