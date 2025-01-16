@@ -1,0 +1,1098 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title></title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="first-steps.html"><strong aria-hidden="true">1.</strong> First steps</a></li><li class="chapter-item expanded "><a href="basic/index.html"><strong aria-hidden="true">2.</strong> The BASIC programming language</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="basic/expressions.html"><strong aria-hidden="true">2.1.</strong> Expressions</a></li><li class="chapter-item expanded "><a href="basic/statements.html"><strong aria-hidden="true">2.2.</strong> Statements</a></li><li class="chapter-item expanded "><a href="basic/io.html"><strong aria-hidden="true">2.3.</strong> Basic IO</a></li><li class="chapter-item expanded "><a href="basic/control_flow.html"><strong aria-hidden="true">2.4.</strong> Control flow</a></li><li class="chapter-item expanded "><a href="basic/functions.html"><strong aria-hidden="true">2.5.</strong> Functions</a></li><li class="chapter-item expanded "><a href="basic/grammar.html"><strong aria-hidden="true">2.6.</strong> Grammar</a></li><li class="chapter-item expanded "><a href="basic/variables_and_program.html"><strong aria-hidden="true">2.7.</strong> Variables and Program Expression</a></li><li class="chapter-item expanded "><a href="basic/commands.html"><strong aria-hidden="true">2.8.</strong> Commands</a></li></ol></li><li class="chapter-item expanded "><a href="assembly.html"><strong aria-hidden="true">3.</strong> Assembly</a></li><li class="chapter-item expanded "><a href="memory.html"><strong aria-hidden="true">4.</strong> Memory</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
+<p>This book is a collection of notes on the use and programming of the Sharp PC-1500 pocket computer.
+We assume the reader has access to a Sharp PC-1500 or an emulator such as <a href="https://pockemul.com/">PockEmul</a>,
+which can even be accessed from a web browser <a href="https://pockemul.com/OL/pockemul.html">here</a>.</p>
+<p>These notes are taken from different sources such as the <a href="https://pockemul.com/wp-content/uploads/2020/05/PC1500_OM_EN.pdf">Sharp PC-1500 Instruction Manual</a>.</p>
+<p>The code of the book is available on <a href="https://github.com/remind-me-later/Sharp-PC-1500-Notes">GitHub</a>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="first-steps"><a class="header" href="#first-steps">First steps</a></h1>
+<p>When you first start the calculator, which can be done by pressing the <code>ON</code> button, you will be greeted by a prompt.
+Notice also that above the screen a <code>RUN</code> prompt is displayed. This means that the calculator is in <code>RUN</code> mode, what this means will be explained later, but for now we will always want to be in <code>RUN</code> mode. If you are not in <code>RUN</code> mode, you can switch to it by pressing the <code>MODE</code> key until the <code>RUN</code> prompt is displayed.</p>
+<p>Introducing something like</p>
+<pre><code class="language-basic">2+2
+</code></pre>
+<p>and pressing enter will give you the expected result:</p>
+<pre><code class="language-basic">4
+</code></pre>
+<p>To discard the result simply press the red <code>CL</code>, shorthand for <code>clear</code>, button at the right of the calculator.
+Now, with a fresh screen, you could even write something like:</p>
+<pre><code class="language-basic">2+2*2
+</code></pre>
+<p>obtaining</p>
+<pre><code class="language-basic">6
+</code></pre>
+<p>And any other expression you could expect of a calculator. But the real power of the PC-1500 is that it
+can run any <code>BASIC</code> program. Introducing, for example:</p>
+<pre><code class="language-basic">PRINT "Hello, World!"
+</code></pre>
+<div class="note">
+The spaces are optional, they make the program more readable, but could slow you down when typing.
+</div>
+<p>will produce the expected output:</p>
+<pre><code class="language-basic">Hello, World!
+</code></pre>
+<p>We can also assign values to variables and print them:</p>
+<pre><code class="language-basic">A=20
+PRINT A
+</code></pre>
+<p>will output</p>
+<pre><code class="language-basic">20
+</code></pre>
+<p>In this fashion we can only execute one line of program at a time, in the following chapters we will see how to write multi-line programs.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="the-basic-programming-language"><a class="header" href="#the-basic-programming-language">The BASIC programming language</a></h1>
+<p>Writing single line programs is kind of limited, so let's see how to write
+programs with multiple lines.</p>
+<p>To write our program we first need to enter the <code>programming</code> mode, to do this
+simply press the <code>mode</code> key until the <code>PRO</code> indicator is displayed above the
+screen. This modes gives us a "text editor" like interface that will make
+writing long programs easier.</p>
+<p>TODO: add graphics</p>
+<p>Now the computer is ready to accept our program, lets start with the classical
+<code>Hello, World!</code> program. The program is introduced line by line, so first we
+introduce the following input.</p>
+<pre><code class="language-basic">10 PRINT "HELLO, WORLD!"
+</code></pre>
+<p>When you are done introducing the line, press the <code>enter</code> key to accept it. The
+first number in the line is the line number, it is used to reference the line in
+the program, and is mandatory. After the line number we have the statement, in
+this case <code>PRINT</code>, which prints the string that follows it, in this case
+<code>"HELLO, WORLD!"</code>.</p>
+<p>Now we can run the program, to do this, press the <code>MODE</code> key until the <code>RUN</code>
+prompt is displayed above the screen. Then press enter the following command.</p>
+<pre><code class="language-basic">RUN
+</code></pre>
+<p>The program will run and display the <code>HELLO, WORLD!</code> message on the screen.</p>
+<p>Let's add a second line to our program, to do this return to the <code>PRO</code> mode and
+write:</p>
+<pre><code class="language-basic">20 PRINT "GOODBYE, WORLD!"
+</code></pre>
+<p>Running the program again will show the two lines, one after another. Let's say
+we want to output something between the two lines, we can simply add a new line
+in <code>PRO</code> mode, between the two existing lines.</p>
+<pre><code class="language-basic">15 PRINT "I'M A COMPUTOR!"
+</code></pre>
+<p>Running wil yield the expected output, but oops we made a typo, to fix it we can
+go again into <code>PRO</code> mode and use the list command</p>
+<pre><code class="language-basic">LIST 15
+</code></pre>
+<p>This will let us edit the line, and fix the typo, to do this point the cursor to
+the incorrect character by using the <code>left</code> and <code>right</code> keys, then simply press
+the character you want to replace it with, in this case <code>E</code>.</p>
+<pre><code class="language-basic">15 PRINT "I'M A COMPUTER!"
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="expressions"><a class="header" href="#expressions">Expressions</a></h1>
+<p>Let's dive deeper into the syntax of BASIC. As we've seen before a program in
+BASIC consists of a list of lines, each line begins with a <strong>line number</strong>,
+followed by a <strong>statement</strong>.</p>
+<p>The line number uniquely identifies each line, the lines of the program are
+executed in order according to the line number. And are also used as labels for
+branch statements, which we'll see later.</p>
+<p>The statement after the line number tells the computer what to do, we've seen
+some examples, like the assignment statement:</p>
+<pre><code class="language-basic">10 LET A = 10
+</code></pre>
+<p>or simply</p>
+<pre><code class="language-basic">10 A = 10
+</code></pre>
+<p>And the print statement:</p>
+<pre><code class="language-basic">20 PRINT A
+</code></pre>
+<p>We'll focus on the first for now. In the <code>RUN</code> mode the computer is in a REPL, each expression introduced is immediately evaluated and the result is displayed on the screen. In <code>PRO</code> mode, this is not the case, all expression must be used alongside a statement, such as an assignment or a print statement.</p>
+<pre><code class="language-basic">10 A = 10 + (2 * 8)
+20 PRINT A + 25
+</code></pre>
+<h2 id="variable-types"><a class="header" href="#variable-types">Variable types</a></h2>
+<p>In SHARP, there are mainly two types of variables, which correspond to the possible content that can be stored in them: a numeric value or a string of characters. The type of variable can be easily distinguished because character variables need to have their name end with a dollar sign '$', while numeric variables do not. The '$' alerts SHARP to the fact that the variable holds character information. Beyond this distinction, both types function in an analogous manner.</p>
+<p>In the specific case of arrays, as in any other programming language, their behavior is entirely predictable, and they are simply a set of variables of one of the two previously mentioned types. As a clarification, it is important to know that an array-variable X and a variable X are separate and distinct to SHARP</p>
+<pre><code class="language-basic">10 A = 10 + (2 * 8)
+20 B$ = "HELLO WORLD"
+</code></pre>
+<h2 id="uninitialized-variables"><a class="header" href="#uninitialized-variables">Uninitialized variables</a></h2>
+<p>It is important to know that each possible variable name that is not reserved by SHARP is initialized automatically to 0 if it is numeric and to an empty string if it is a character type variable.</p>
+<p>Once initialized information within variables is retained until:</p>
+<ol>
+<li>A CLEAR or NEW commad is given.</li>
+<li>A program is run using the RUN command.</li>
+<li>Another Assignment statement is executed for the same variable.</li>
+<li>The computer's batteries are changed.
+Turning the computer off does not affect values stored in variables.</li>
+</ol>
+<h2 id="reserved-variable-names"><a class="header" href="#reserved-variable-names">Reserved variable names</a></h2>
+<p>Due to conflicts with abbreviations which have other meanings in the BASIC language, SHARP does not allow the use of some variable names such as: LF, IF, LN, PI, TD, LFS, IFS, LNS, PIS, TO$.</p>
+<h2 id="operators"><a class="header" href="#operators">Operators</a></h2>
+<p>There are four arithmetic operators: <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>. The precedence of the operators is the usual.</p>
+<p>The <code>+</code> and <code>-</code> can also be used in their unary form with a high precedence.</p>
+<p>There are also the usual comparison operators <code>&lt;</code>, <code>&lt;=</code>, <code>=</code>, <code>&gt;=</code>, <code>&gt;</code>, <code>&lt;&gt;</code>, which seem to have all the same precedence, that being the second lowest.</p>
+<p>There are also boolean bitwise functions <code>AND</code>, <code>OR</code> and <code>NOT</code>, which seem to have all the same precedence, that is the lowest.</p>
+<h2 id="precedence"><a class="header" href="#precedence">Precedence</a></h2>
+<p>Calculations are performed in accordance with the following hierarchy; expressions in parentheses having the highest priority and logical operations having the lowest. If two or more
+operations of the same priority are found in the same expression or sub-expression, they are
+evaluated from left to right.</p>
+<ul>
+<li>
+<ol>
+<li>Expressions in Parenthesis</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>Retrieval or values from variables</li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li>Functions</li>
+</ol>
+</li>
+<li>
+<ol start="4">
+<li>Exponentiation</li>
+</ol>
+</li>
+<li>
+<ol start="5">
+<li>Arithmetic Sign (+ , -)</li>
+</ol>
+</li>
+<li>
+<ol start="6">
+<li>Multiplication, Division (* , /)</li>
+</ol>
+</li>
+<li>
+<ol start="7">
+<li>Addition, Subtraction (+ , -)</li>
+</ol>
+</li>
+<li>
+<ol start="8">
+<li>Comparison Operators (&lt;, &lt;=, =, &gt;= , &gt;, &lt;&gt;)</li>
+</ol>
+</li>
+<li>
+<ol start="9">
+<li>Logical Operators (AND, OR, NOT)</li>
+</ol>
+</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="statements"><a class="header" href="#statements">Statements</a></h1>
+<p>First of all, let’s ask ourselves: <strong>what is a statement?</strong></p>
+<p>A <strong>statement</strong> is a line of code or expression that performs a specific action or operation. Each statement is an instruction to the computer that tells it what to do, whether it’s executing a calculation, manipulating data, controlling program flow, or interacting with the user.
+There are different types of statements:</p>
+<ul>
+<li>
+<p>Assignment Statements , such as <code>A = B + C</code></p>
+</li>
+<li>
+<p>Control Flow Statements, such as conditional statements (<code>IF</code>, <code>ELSE</code>) and loops (<code>FOR</code>, <code>WHILE</code>, <code>REPEAT</code>).</p>
+</li>
+<li>
+<p>I/O Statements such as (<code>PRINT</code>, <code>PAUSE</code>, <code>INPUT</code>...)</p>
+</li>
+</ul>
+<h2 id="list"><a class="header" href="#list">List</a></h2>
+<p>Here is the complete list of all possible statement instructions available:</p>
+<h3 id="aread"><a class="header" href="#aread">AREAD</a></h3>
+<h3 id="arun"><a class="header" href="#arun">ARUN</a></h3>
+<h3 id="beep"><a class="header" href="#beep">BEEP</a></h3>
+<h3 id="clear"><a class="header" href="#clear">CLEAR</a></h3>
+<h3 id="cls"><a class="header" href="#cls">CLS</a></h3>
+<h3 id="cursor"><a class="header" href="#cursor">CURSOR</a></h3>
+<h3 id="data"><a class="header" href="#data">DATA</a></h3>
+<h3 id="degree"><a class="header" href="#degree">DEGREE</a></h3>
+<h3 id="dim"><a class="header" href="#dim">DIM</a></h3>
+<h3 id="end"><a class="header" href="#end">END</a></h3>
+<h3 id="for"><a class="header" href="#for">FOR</a></h3>
+<h3 id="to"><a class="header" href="#to">TO</a></h3>
+<h3 id="step"><a class="header" href="#step">STEP</a></h3>
+<h3 id="gcursor"><a class="header" href="#gcursor">GCURSOR</a></h3>
+<h3 id="gosub"><a class="header" href="#gosub">GOSUB</a></h3>
+<h3 id="goto"><a class="header" href="#goto">GOTO</a></h3>
+<h3 id="gprint"><a class="header" href="#gprint">GPRINT</a></h3>
+<h3 id="grad"><a class="header" href="#grad">GRAD</a></h3>
+<h3 id="if"><a class="header" href="#if">IF</a></h3>
+<h3 id="input"><a class="header" href="#input">INPUT</a></h3>
+<h3 id="let"><a class="header" href="#let">LET</a></h3>
+<h3 id="lock"><a class="header" href="#lock">LOCK</a></h3>
+<h3 id="next"><a class="header" href="#next">NEXT</a></h3>
+<h3 id="on-error"><a class="header" href="#on-error">ON ERROR</a></h3>
+<h3 id="on-gosub"><a class="header" href="#on-gosub">ON GOSUB</a></h3>
+<h3 id="on-goto"><a class="header" href="#on-goto">ON GOTO</a></h3>
+<h3 id="opn"><a class="header" href="#opn">OPN</a></h3>
+<h3 id="pause"><a class="header" href="#pause">PAUSE</a></h3>
+<h3 id="point"><a class="header" href="#point">POINT</a></h3>
+<h3 id="print"><a class="header" href="#print">PRINT</a></h3>
+<h3 id="radian"><a class="header" href="#radian">RADIAN</a></h3>
+<h3 id="random"><a class="header" href="#random">RANDOM</a></h3>
+<h3 id="read"><a class="header" href="#read">READ</a></h3>
+<h3 id="rem"><a class="header" href="#rem">REM</a></h3>
+<h3 id="restore"><a class="header" href="#restore">RESTORE</a></h3>
+<h3 id="return"><a class="header" href="#return">RETURN</a></h3>
+<h3 id="stop"><a class="header" href="#stop">STOP</a></h3>
+<h3 id="then"><a class="header" href="#then">THEN</a></h3>
+<h3 id="tron"><a class="header" href="#tron">TRON</a></h3>
+<h3 id="troff"><a class="header" href="#troff">TROFF</a></h3>
+<h3 id="unlock"><a class="header" href="#unlock">UNLOCK</a></h3>
+<h3 id="using"><a class="header" href="#using">USING</a></h3>
+<h3 id="wait"><a class="header" href="#wait">WAIT</a></h3>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="basic-io"><a class="header" href="#basic-io">Basic IO</a></h1>
+<h2 id="key-information"><a class="header" href="#key-information">Key Information</a></h2>
+<p>Basic information about SHARP's display, there's only space available for 26 characters, If the length of the information displayed exceeds that number the items at the end of the print list will not be seen.</p>
+<h2 id="print-1"><a class="header" href="#print-1"><code>PRINT</code></a></h2>
+<p>It is the main statement to produce output, it has several different variations.</p>
+<p>The general format of the <code>PRINT</code> statement is the word <code>PRINT</code> followed by an item or a list of items to be printed. These
+include character strings, expressions, or names of variables whose values will be printed.</p>
+<h3 id="statement-overview"><a class="header" href="#statement-overview">Statement Overview</a></h3>
+<ul>
+<li>
+<p><strong>";"</strong>: Inserts a natural cadence, which results in one space between arguments.</p>
+</li>
+<li>
+<p><strong>","</strong>: Creates a tab jump, equivalent to 8 spaces, between arguments. Strings are left-aligned or "left justified", while numbers are right-aligned or "right justified".</p>
+</li>
+<li>
+<p><strong>Argument Calculations</strong>: The <code>PRINT</code> statement can perform calculations on arguments and display the result.</p>
+</li>
+<li>
+<p><strong>Comma Limit</strong>: Using a comma <code>,</code> in the <code>PRINT</code> statement restricts the number of arguments to a maximum of two.</p>
+</li>
+</ul>
+<pre><code class="language-basic">    10 BS = " BE "
+    20 T = 2
+    30 PRINT T; BS; " OR NOT"; 12/3 - 2; BS
+</code></pre>
+<h2 id="pause-1"><a class="header" href="#pause-1"><code>PAUSE</code></a></h2>
+<p>It is a semi-automatic form of the <code>PRINT</code> statement, with the difference that the output remains on the display for a fixed and brief period of time. Basically a <code>PRINT</code> statement followed by a countdown. When the countdown completes, the program automatically continues to the next statement.</p>
+<p>All of the various techniques for the <code>PRINT</code> statement are also applicable here. These 2 statements can be mixed at will. It seems like it can only be used in "Programmer mode".</p>
+<pre><code class="language-basic">     10 PAUSE "DO";
+     20 PAUSE "RE";
+     30 PAUSE "MI";
+     40 PAUSE "FA";
+     50 PAUSE "SOL";
+     60 PAUSE "LA";
+     70 PAUSE "SI";
+     80 PAUSE "DO"
+</code></pre>
+<h2 id="input-1"><a class="header" href="#input-1"><code>INPUT</code></a></h2>
+<p>The <code>INPUT</code> statement in BASIC is used to gather user-provided data during program execution. It allows programmers to prompt users for specific information and store their responses in variables.</p>
+<h3 id="different-usages"><a class="header" href="#different-usages">Different Usages:</a></h3>
+<ul>
+<li>
+<p><strong>Basic Syntax</strong>: The simplest form of the INPUT statement is</p>
+<pre><code class="language-basic">INPUT variable-name
+</code></pre>
+<p>When executed, it displays a <code>?</code> on the screen, signaling the user to enter data.</p>
+</li>
+<li>
+<p><strong>Prompting the User</strong>: To make the prompt more informative, the INPUT statement can include a custom message using a character string</p>
+<pre><code class="language-basic">INPUT "prompt message"; variable-name
+</code></pre>
+<p>This form displays the specified prompt followed by a blinking cursor on the same line, where the user can enter their input.</p>
+</li>
+<li>
+<p><strong>Advanced Prompting</strong>: A variation of the prompt uses a <strong>comma</strong> instead of a <strong>semicolon</strong>:</p>
+<pre><code class="language-basic">INPUT "prompt message", variable-name
+</code></pre>
+<p>This version clears the prompt message once the user starts typing their response, replacing it with the input.</p>
+</li>
+</ul>
+<h3 id="key-notes"><a class="header" href="#key-notes">Key Notes</a></h3>
+<ul>
+<li>
+<p>The expected type of data (numeric or character) must match the variable type.</p>
+</li>
+<li>
+<p>The INPUT statement can gather multiple data items at once by specifying a list of variables separated by commas:</p>
+<pre><code class="language-basic">INPUT var1, var2, var3
+</code></pre>
+</li>
+</ul>
+<h2 id="wait-1"><a class="header" href="#wait-1"><code>WAIT</code></a></h2>
+<p>The <code>WAIT</code> statement in BASIC allows the programmer to control how long information displayed by the <code>PRINT</code> statement stays on the screen. It modifies the operation of the <code>PRINT</code> statement, allowing the displayed information to remain visible for a specified period of time.</p>
+<ul>
+<li>
+<p>The <code>argument</code> is optional. If no argument is provided, the default behavior is <strong>"infinite"</strong>, meaning the information will remain on the screen until the user presses the <strong>Enter</strong> key. This is the default mode in many programs.</p>
+</li>
+<li>
+<p>If an argument is provided, all subsequent <code>PRINT</code> statements will hold their information on the screen for a time period proportional to the specified argument. This is similar to the <code>PAUSE</code> statement, but unlike <code>PAUSE</code>, the <code>WAIT</code> statement's time period is variable.</p>
+</li>
+</ul>
+<h3 id="argument-values"><a class="header" href="#argument-values">Argument Values</a></h3>
+<ul>
+<li>The argument value must be between <strong>0</strong> and <strong>65535</strong>.
+<ul>
+<li><strong>WAIT 0</strong> causes the information to be displayed so quickly that it is unreadable.</li>
+<li><strong>WAIT 65535</strong> causes the information to stay on the screen for about <strong>17 minutes</strong>.</li>
+<li><strong>WAIT 64</strong> results in a display time of about <strong>1 second</strong>.</li>
+<li><strong>WAIT 3840</strong> gives a display time of about <strong>1 minute</strong>.</li>
+</ul>
+</li>
+</ul>
+<p>To reset the <code>PRINT</code> statement back to its default behavior (waiting for the user to press Enter), simply use <code>WAIT</code> with no argument.</p>
+<pre><code class="language-basic">      WAIT argument (64)
+</code></pre>
+<h3 id="key-notes-1"><a class="header" href="#key-notes-1">Key Notes:</a></h3>
+<ul>
+<li>
+<p>The <code>WAIT</code> statement has no effect on the <code>PAUSE</code> statement.</p>
+</li>
+<li>
+<p>The time specified by the <code>WAIT</code> statement can be adjusted for more precise control over the display duration.</p>
+</li>
+</ul>
+<h2 id="read-1"><a class="header" href="#read-1"><code>READ</code></a></h2>
+<p>The <code>READ</code> statement in BASIC serves as a mechanism to retrieve data from <code>DATA</code> statements and assign it to specified variables.
+Each variable in the <code>READ</code> statement is assigned the next available data item from the list.</p>
+<p>The <code>READ</code> statement consists of the keyword <code>READ</code>, followed by a comma-separated list of variable names. These variables can be either numeric or character types.</p>
+<h3 id="key-notes-2"><a class="header" href="#key-notes-2">Key Notes:</a></h3>
+<ul>
+<li>
+<p><strong>Execution Requirements</strong>: For every execution of a <code>READ</code> statement, there must be a corresponding data item within a <code>DATA</code> statement. If no data item is available for a variable, the program halts and signals an error.</p>
+</li>
+<li>
+<p><strong>Type Matching</strong>: The data type (numeric or character) of the retrieved item must match the type of the variable to which it is being assigned. A mismatch in type results in an error.</p>
+</li>
+</ul>
+<pre><code class="language-basic">     120 READ NS, WT , CS, SX$, L
+</code></pre>
+<h2 id="data-1"><a class="header" href="#data-1"><code>DATA</code></a></h2>
+<p>The <code>DATA</code> statement allows the programmer to embed data directly within the program. This data can include numbers (in real or scientific notation) and character strings, which are separated by commas.</p>
+<p><code>DATA</code> statements may appear anywhere within a program; however, grouping them at the beginning of the program is a widely adopted convention among programmers.</p>
+<p>Extra data items not used during the program execution are ignored.</p>
+<pre><code class="language-basic">     10 DATA "MOBY DICK", 20000, " WHITE". " M'', 112
+</code></pre>
+<h2 id="restore-1"><a class="header" href="#restore-1"><code>RESTORE</code></a></h2>
+<p>The <code>RESTORE</code> statement in BASIC is used to reset the data pointer, allowing the program to re-read data items from <code>DATA</code> statements.</p>
+<p>The <code>RESTORE</code> statement enables the re-use of some or all values defined in <code>DATA</code> statements. It resets the data pointer to a specified location, allowing subsequent <code>READ</code> statements to retrieve previously used data items.</p>
+<h3 id="different-usages-1"><a class="header" href="#different-usages-1">Different Usages:</a></h3>
+<ul>
+<li>
+<p><strong>Default Behavior</strong>: When executed without additional parameters, the RESTORE statement resets the pointer to the first <code>DATA</code> statement in the program. Subsequent<code>READ</code> statements will then begin reading from the start of the data list.</p>
+</li>
+<li>
+<p><strong>Selective Restoration</strong>: The RESTORE statement can specify a starting point using either a <strong>line number</strong> or a <strong>label</strong>.</p>
+</li>
+</ul>
+<pre><code class="language-basic">     RESTORE line_number (150)
+</code></pre>
+<p>This causes the program to begin re-reading data items from the <code>DATA</code> statement located at the specified line number.</p>
+<p>Alternatively, a <strong>label</strong> can be assigned to a <code>DATA</code> statement, and the RESTORE statement can use this label to target the starting point:</p>
+<pre><code class="language-basic">     RESTORE label ("X")
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="control-flow"><a class="header" href="#control-flow">Control flow</a></h1>
+<h2 id="if-and--then"><a class="header" href="#if-and--then"><code>IF</code> and ## <code>THEN</code></a></h2>
+<p>The <code>IF</code> statement in BASIC provides conditional execution of code based on the result of a logical test. It enables decision-making within a program by evaluating conditions and determining which actions to perform.</p>
+<p>The <code>THEN</code> keyword in BASIC is a component of the <code>IF</code> statement, used to specify the action or instruction to execute when a condition evaluates to <strong>True</strong>. It defines the response to the logical test performed by the <code>IF</code> statement.</p>
+<pre><code class="language-basic">     IF condition THEN statement
+</code></pre>
+<h3 id="logical-flow"><a class="header" href="#logical-flow">Logical Flow</a></h3>
+<ul>
+<li>
+<p>If the <strong>condition</strong> evaluates to <strong>True</strong>, the statement following the <code>THEN</code> keyword is executed.</p>
+</li>
+<li>
+<p>If the <strong>condition</strong> evaluates to <strong>False</strong>, the statement is skipped, and program execution continues with the next line.</p>
+</li>
+</ul>
+<h3 id="types-of-statements"><a class="header" href="#types-of-statements">Types of Statements</a></h3>
+<p>The statement after <code>THEN</code> can be any valid BASIC command, including:</p>
+<ul>
+<li>
+<p>A <code>PRINT</code> statement to display information.</p>
+</li>
+<li>
+<p>An <strong>assignment</strong> using <code>LET</code> (<strong>required</strong> for assignments in this context).</p>
+</li>
+<li>
+<p>A <code>GOTO</code> statement for branching to another line (using a <strong>number-line</strong> also works).</p>
+</li>
+</ul>
+<h3 id="key-notes-3"><a class="header" href="#key-notes-3">Key Notes</a></h3>
+<ul>
+<li>
+<p>In BASIC, any expression evaluating to a <strong>non-zero</strong> value is considered <strong>True</strong>. A <strong>zero</strong> value is considered <strong>False</strong>.</p>
+</li>
+<li>
+<p>If the statement following <code>THEN</code> is an assignment, the <code>LET</code> keyword must be included.</p>
+</li>
+</ul>
+<h2 id="else"><a class="header" href="#else"><code>ELSE</code></a></h2>
+<h2 id="goto-1"><a class="header" href="#goto-1"><code>GOTO</code></a></h2>
+<p>The <code>GOTO</code> statement in BASIC alters the normal sequential flow of a program by jumping to a specified line. It allows for flexible execution paths, skipping or repeating sections of code as necessary.</p>
+<p>The <code>GOTO</code> instruction is a <strong>command</strong> as well as a <strong>statement</strong>.</p>
+<p>Issued as a <strong>statement</strong>, <code>GOTO</code> tells SHARP to "go to" a line other than the next one and begin executing statements sequentially from there.</p>
+<pre><code class="language-basic">    GOTO expression
+</code></pre>
+<p>where:</p>
+<p><strong>expression</strong> evaluates to a number which is a valid program line-number (<strong>1 through 65279</strong>).</p>
+<p>Issued as a <strong>command</strong>, in the RUN mode, <code>GOTO</code> begins program execution in a manner similar to the <code>RUN</code> command. However,  unlike the <code>RUN</code> command the <code>GOTO</code> command will <strong>not clear values</strong> from any variables before it begins execution of lhe program.</p>
+<p>To begin program execution with the <code>GOTO</code> command <code>ENTER</code>:</p>
+<pre><code class="language-basic">    GOTO line_number
+</code></pre>
+<p>where:</p>
+<p><strong>line_number</strong> is the number of the first line of the program to be executed.</p>
+<p><strong>NOTE</strong>: Specifying a line number which does not exist will result in an <code>ERROR 11</code>.</p>
+<h3 id="possible-usages"><a class="header" href="#possible-usages">Possible usages</a></h3>
+<ul>
+<li>
+<p>As a jump instruction inside of an <code>IF</code> statement</p>
+</li>
+<li>
+<p>To create <strong>loops</strong> manually</p>
+</li>
+<li>
+<p>As a command <code>RUN</code> substitute to start a program in <code>RUN</code> mode</p>
+</li>
+</ul>
+<h2 id="gosub-1"><a class="header" href="#gosub-1"><code>GOSUB</code></a></h2>
+<p>The <code>GOSUB</code> statement is a special type of <code>GOTO</code> statement used to call a subroutine, which is a reusable block of code within a program. Subroutines help avoid duplication of code and allow for modular program design.</p>
+<p>It has the same syntax as the <code>GOTO</code> statement with the only difference being that before jumping, the program "remembers" the location of the <code>GOSUB</code> statement so it can return to it after reaching the <code>RETURN</code> statement.</p>
+<p>When the <code>RETURN</code> statement is encountered in the subroutine, the program resumes execution at the line following the original <code>GOSUB</code> statement.</p>
+<h2 id="for-and-next"><a class="header" href="#for-and-next"><code>FOR</code> and <code>NEXT</code></a></h2>
+<p>The <code>FOR</code> and <code>NEXT</code> statements in BASIC provide a structured mechanism for repeating a sequence of instructions, forming a loop. They are particularly useful for iterative tasks, where a counter variable controls the number of repetitions.</p>
+<p>Utilizes a counter variable with defined start, end, and step values to determine the loop's behavior.</p>
+<pre><code class="language-basic">FOR counter-variable = initial-value TO final-value [STEP increment-value]
+    [statements to repeat]
+NEXT counter-variable
+</code></pre>
+<h2 id="return-1"><a class="header" href="#return-1"><code>RETURN</code></a></h2>
+<p>The <code>RETURN</code> statement is used to indicate the end of a subroutine in BASIC. It ensures the program resumes execution at the point immediately following the corresponding <code>GOSUB</code> statement.</p>
+<p>Every <code>GOSUB</code> needs to have its own <code>RETURN</code> statement.</p>
+<h2 id="repeat"><a class="header" href="#repeat"><code>REPEAT</code></a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="functions"><a class="header" href="#functions">Functions</a></h1>
+<p>The <strong>functions</strong> available on the SHARP calculator, with few exceptions, are basic operations dedicated to performing mathematical calculations. Additionally, there are some for strings. They all have in common that they are direct operations that return a specific result given certain arguments.</p>
+<h2 id="list-1"><a class="header" href="#list-1">LIST</a></h2>
+<p>Here's the complete list of available functions:</p>
+<h3 id="abs"><a class="header" href="#abs">ABS</a></h3>
+<h3 id="acs"><a class="header" href="#acs">ACS</a></h3>
+<h3 id="and"><a class="header" href="#and">AND</a></h3>
+<h3 id="asc"><a class="header" href="#asc">ASC</a></h3>
+<h3 id="asn"><a class="header" href="#asn">ASN</a></h3>
+<h3 id="atn"><a class="header" href="#atn">ATN</a></h3>
+<h3 id="chr"><a class="header" href="#chr">CHR$</a></h3>
+<h3 id="cos"><a class="header" href="#cos">COS</a></h3>
+<h3 id="deg"><a class="header" href="#deg">DEG</a></h3>
+<h3 id="dms"><a class="header" href="#dms">DMS</a></h3>
+<h3 id="exp"><a class="header" href="#exp">EXP</a></h3>
+<h3 id="inkey"><a class="header" href="#inkey">INKEY$</a></h3>
+<h3 id="int"><a class="header" href="#int">INT</a></h3>
+<h3 id="left"><a class="header" href="#left">LEFT$</a></h3>
+<h3 id="len"><a class="header" href="#len">LEN</a></h3>
+<h3 id="log"><a class="header" href="#log">LOG</a></h3>
+<h3 id="ln"><a class="header" href="#ln">LN</a></h3>
+<h3 id="mem"><a class="header" href="#mem">MEM</a></h3>
+<h3 id="mid"><a class="header" href="#mid">MID$</a></h3>
+<h3 id="not"><a class="header" href="#not">NOT</a></h3>
+<h3 id="or"><a class="header" href="#or">OR</a></h3>
+<h3 id="𝛑-pi"><a class="header" href="#𝛑-pi">𝛑 (PI)</a></h3>
+<h3 id="point-1"><a class="header" href="#point-1">POINT</a></h3>
+<h3 id="right"><a class="header" href="#right">RIGHT$</a></h3>
+<h3 id="rnd"><a class="header" href="#rnd">RND</a></h3>
+<h3 id="sgn"><a class="header" href="#sgn">SGN</a></h3>
+<h3 id="sin"><a class="header" href="#sin">SIN</a></h3>
+<h3 id="-sqr"><a class="header" href="#-sqr">√ (SQR)</a></h3>
+<h3 id="status"><a class="header" href="#status">STATUS</a></h3>
+<h3 id="str"><a class="header" href="#str">STR$</a></h3>
+<h3 id="tan"><a class="header" href="#tan">TAN</a></h3>
+<h3 id="time"><a class="header" href="#time">TIME</a></h3>
+<h3 id="val-value"><a class="header" href="#val-value">VAL (value)</a></h3>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="grammar"><a class="header" href="#grammar">Grammar</a></h1>
+<p>The grammar has been extracted from sources as much as possible, but a big chunk
+of it has been reverse engineered from the calculator's behavior. Checked with
+<a href="https://bnfplayground.pauliankline.com/">BNF Visualizer</a>.</p>
+<pre><code class="language-ebnf">/* --- Tokens --- */
+&lt;digit&gt; ::= [0-9]
+&lt;number&gt; ::= &lt;digit&gt;+
+&lt;letter&gt; ::= [A-Z]
+&lt;identifier&gt; ::= &lt;letter&gt; (&lt;letter&gt; | &lt;digit&gt;)*
+&lt;comparison_op&gt; ::= "=" | "&lt;&gt;" | "&lt;" | "&gt;" | "&lt;=" | "&gt;="
+&lt;add_sub_op&gt; ::= "+" | "-"
+&lt;mul_div_op&gt; ::= "*" | "/"
+&lt;char&gt; ::= [A-Z] | [a-z] | [0-9]
+    | " " | "!" | "\"" | "#" | "$" | "%" | "&amp;" | "'" | "(" | ")"
+    | "*" | "+" | "," | "-" | "." | "/" | ":" | ";" | "&lt;" | "="
+    | "&gt;" | "?" | "@" | "[" | "\\" | "]" | "^" | "_" | "`"
+    | "{" | "|" | "}" | "~"
+&lt;string&gt; ::= "\"" &lt;char&gt;* "\"" | "\"" &lt;char&gt;*
+&lt;newline&gt; ::= "\n"
+
+/* functions */
+&lt;and&gt; ::= "AND"
+&lt;or&gt; ::= "OR"
+&lt;not&gt; ::= "NOT"
+
+/* --- Grammar --- */
+&lt;program&gt; ::= &lt;line&gt;+
+&lt;line&gt; ::= &lt;number&gt; &lt;stmt&gt; &lt;newline&gt;
+
+/* stmts */
+&lt;stmt&gt; ::= &lt;atomic_stmt&gt; (":" &lt;atomic_stmt&gt;)*
+&lt;atomic_stmt&gt; ::= &lt;assignment&gt;
+    | &lt;print&gt;
+    | &lt;pause&gt;
+    | &lt;input&gt;
+    | &lt;wait&gt;
+    | &lt;cursor&gt;
+    | &lt;gcursor&gt;
+    | &lt;gprint&gt;
+    | &lt;if&gt;
+    | &lt;for&gt;
+    | &lt;next&gt;
+    | &lt;goto&gt;
+    | &lt;gosub&gt;
+    | &lt;return&gt;
+    | &lt;end&gt;
+    | &lt;comment&gt;
+    | &lt;data&gt;
+    | &lt;read&gt;
+    | &lt;restore&gt;
+    | &lt;poke&gt;
+    | &lt;call&gt;
+    | &lt;dim&gt;
+
+/* Comments */
+&lt;comment&gt; ::= "REM" &lt;char&gt;*
+
+/* Variables */
+&lt;variable&gt; ::= &lt;identifier&gt; "$"?
+&lt;array_subscript&gt; ::= &lt;variable&gt; "(" &lt;expr&gt; ("," &lt;expr&gt; )? ")"
+&lt;lvalue&gt; ::= &lt;variable&gt; | &lt;array_subscript&gt;
+&lt;assignment&gt; ::= "LET"? &lt;lvalue&gt; "=" &lt;expr&gt;
+
+/* I/O */
+&lt;print&gt; ::= "PRINT" &lt;expr&gt; (";" &lt;expr&gt;)*
+&lt;pause&gt; ::= "PAUSE" &lt;expr&gt; (";" &lt;expr&gt;)*
+&lt;input&gt; ::= "INPUT" (&lt;expr&gt; ";")? &lt;lvalue&gt;
+&lt;wait&gt; ::= "WAIT" &lt;expr&gt;?
+&lt;cursor&gt; ::= "CURSOR" &lt;expr&gt;
+&lt;gcursor&gt; ::= "GCURSOR" &lt;expr&gt;
+&lt;gprint&gt; ::= "GPRINT" &lt;expr&gt; (";" &lt;expr&gt;)* | "GPRINT" &lt;string&gt;
+
+/* Data */
+&lt;data_item&gt; ::= &lt;number&gt; | &lt;string&gt;
+&lt;data&gt; ::= "DATA" &lt;data_item&gt; ("," &lt;data_item&gt;)*
+&lt;read&gt; ::= "READ" &lt;lvalue&gt; ("," &lt;lvalue&gt;)*
+&lt;restore&gt; ::= "RESTORE" (&lt;number&gt;)?
+
+/* Control flow */
+&lt;if&gt; ::= "IF" &lt;expr&gt; "THEN" &lt;stmt&gt; ("ELSE" &lt;stmt&gt;)?
+&lt;for&gt; ::= "FOR" &lt;variable&gt; "=" &lt;expr&gt; "TO" &lt;expr&gt; ("STEP" &lt;expr&gt;)?
+&lt;next&gt; ::= "NEXT" &lt;variable&gt;
+&lt;goto&gt; ::= "GOTO" &lt;number&gt;
+&lt;gosub&gt; ::= "GOSUB" &lt;number&gt;
+&lt;return&gt; ::= "RETURN"
+&lt;end&gt; ::= "END"
+
+/* Assembly */
+&lt;poke&gt; ::= "POKE" &lt;number&gt;, (&lt;number&gt;)+
+&lt;call&gt; ::= "CALL" &lt;number&gt;
+
+/* Arrays */
+&lt;dim&gt; ::= "DIM" &lt;variable&gt; "(" &lt;number&gt; ("," &lt;expr&gt; )? ")" ("*" &lt;number&gt;)?
+
+/* exprs */
+&lt;expr&gt; ::= &lt;comparison&gt;
+&lt;comparison&gt; ::= &lt;add_sub&gt; (&lt;comparison_op&gt; &lt;add_sub&gt;)*
+&lt;add_sub&gt; ::= &lt;mul_div&gt; (&lt;add_sub_op&gt; &lt;mul_div&gt;)*
+&lt;mul_div&gt; ::= &lt;factor&gt; (&lt;mul_div_op&gt; &lt;factor&gt;)*
+&lt;factor&gt; ::= "-" &lt;factor&gt; | "+" &lt;factor&gt; | &lt;term&gt;
+&lt;term&gt; ::= &lt;number&gt; | &lt;lvalue&gt; | &lt;string&gt; | "(" &lt;expr&gt; ")"
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="expression-of-variables-and-programs"><a class="header" href="#expression-of-variables-and-programs">Expression of Variables and Programs</a></h1>
+<h2 id="expression-of-decimal-numbers"><a class="header" href="#expression-of-decimal-numbers">Expression of Decimal Numbers</a></h2>
+<p>Decimal numbers are represented using 8 bytes to accommodate values within the range:
+[-9.999999999 \times 10^{99}, + 9.999999999 \times 10^{99}]</p>
+<h3 id="byte-structure"><a class="header" href="#byte-structure">Byte Structure</a></h3>
+<ul>
+<li><strong>1st Byte</strong>: Exponent (binary format, can be negative)</li>
+<li><strong>2nd Byte</strong>: Mantissa sign (00H for positive, 80H for negative)</li>
+<li><strong>3rd to 7th Bytes</strong>: Mantissa value within [-9.999999999, + 9.999999999]</li>
+<li><strong>8th Byte</strong>: Reserved (always 00H)</li>
+</ul>
+<p><img src="basic/../../images/basic/Numeric_Store_Example.png" alt="Numeric Memory Distribution Example" /></p>
+<hr />
+<h2 id="expression-of-binary-numbers"><a class="header" href="#expression-of-binary-numbers">Expression of Binary Numbers</a></h2>
+<p>Binary numbers use 8 bytes, though only 3 bytes are active (5th, 6th, and 7th) within the range:
+[-32768, +32767]</p>
+<h3 id="byte-structure-1"><a class="header" href="#byte-structure-1">Byte Structure</a></h3>
+<ul>
+<li><strong>5th Byte</strong>: Reserved (B2H)</li>
+<li><strong>6th to 7th Bytes</strong>: Binary number value</li>
+<li><strong>1st to 4th, 8th Bytes</strong>: Invalid data</li>
+</ul>
+<h2 id=""><a class="header" href="#"><img src="basic/../../images/basic/Binary_Number_Example.png" alt="Binary Number Memory Distribution Example" /></a></h2>
+<h2 id="expression-of-character-strings"><a class="header" href="#expression-of-character-strings">Expression of Character Strings</a></h2>
+<p>Character string information is composed of 8 bytes, where only 4 bytes are used. The character string information resides in the address specified.</p>
+<h3 id="byte-structure-2"><a class="header" href="#byte-structure-2">Byte Structure</a></h3>
+<ul>
+<li><strong>5th Byte</strong>: Reserved (D0H)</li>
+<li><strong>6th to 7th Bytes</strong>: Leading address (0000H to FFFFH)</li>
+<li><strong>8th Byte</strong>: Size of the string (01H to 50H)</li>
+<li><strong>1st to 4th Bytes</strong>: Invalid data</li>
+</ul>
+<h2 id="-1"><a class="header" href="#-1"><img src="basic/../../images/basic/String_Example.png" alt="String Memory Distribution Example" /></a></h2>
+<h2 id="structure-of-variable-names"><a class="header" href="#structure-of-variable-names">Structure of Variable Names</a></h2>
+<p>Variable names consist of two bytes representing 2 ASCII characters and contain bits to distinguish between numeric and non-numeric variables, with support for array assignments.</p>
+<h3 id="bit-structure"><a class="header" href="#bit-structure">Bit Structure</a></h3>
+<ul>
+<li><strong>1st to 8th bits</strong>: First ASCII character</li>
+<li><strong>9th bit</strong>: Array assignment (1 for arrays, 0 otherwise)</li>
+<li><strong>10th bit</strong>: 7th bit of the ASCII code (least significant byte)</li>
+<li><strong>11th bit</strong>: Indicates if the variable is numeric (0) or non-numeric (1)</li>
+<li><strong>12th to 16th bits</strong>: Second ASCII character (low-order bits)</li>
+</ul>
+<h2><img src="basic/../../images/basic/Variable_Example.png" alt="Variable Examples Table" />
+<img src="basic/../../images/basic/Array_Example.png" alt="Array Memory Distribution Example" /></h2>
+<h2 id="structure-of-program-lines"><a class="header" href="#structure-of-program-lines">Structure of Program Lines</a></h2>
+<p>Each line in the program consists of a line number, line size, code, and an end code (0DH).</p>
+<h3 id="byte-structure-3"><a class="header" href="#byte-structure-3">Byte Structure</a></h3>
+<ul>
+<li><strong>2 Bytes</strong>: Line number</li>
+<li><strong>1 Byte</strong>: Line size</li>
+<li><strong>Variable Bytes</strong>: Program code</li>
+<li><strong>1 Byte</strong>: End code (0DH)</li>
+</ul>
+<h2 id="-2"><a class="header" href="#-2"><img src="basic/../../images/basic/Program_Example.png" alt="Program Memory Distribution Example" /></a></h2>
+<h2 id="structure-of-reserved-area"><a class="header" href="#structure-of-reserved-area">Structure of Reserved Area</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="basic-commands-and-memory-address"><a class="header" href="#basic-commands-and-memory-address">BASIC Commands and Memory Address</a></h1>
+<h2 id="basic-command-list"><a class="header" href="#basic-command-list">BASIC Command List:</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Command</th><th>Internal Code</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>ABS</code></td><td>F170H</td><td>Returns absolute value of a number</td></tr>
+<tr><td><code>ACS</code></td><td>F174H</td><td>Arc cosine function</td></tr>
+<tr><td><code>AND</code></td><td>F150H</td><td>Logical AND operation</td></tr>
+<tr><td><code>AREAD</code></td><td>F18OH</td><td>Reads analog input</td></tr>
+<tr><td><code>ARUN</code></td><td>F181H</td><td>Auto-run a program</td></tr>
+<tr><td><code>ASC</code></td><td>F160H</td><td>Returns ASCII code of a character</td></tr>
+<tr><td><code>ASN</code></td><td>F173H</td><td>Arc sine function</td></tr>
+<tr><td><code>ATN</code></td><td>F175H</td><td>Arc tangent function</td></tr>
+<tr><td><code>BEEP</code></td><td>F182H</td><td>Produces a sound from the device speaker</td></tr>
+<tr><td><code>BREAK</code></td><td>F0B3H</td><td>Interrupts program execution</td></tr>
+<tr><td><code>CALL</code></td><td>F18AH</td><td>Calls a machine language subroutine</td></tr>
+<tr><td><code>CHAIN</code></td><td>F0B2H</td><td>Links to another program</td></tr>
+<tr><td><code>CHR$</code></td><td>F163H</td><td>Converts ASCII code to character</td></tr>
+<tr><td><code>CLEAR</code></td><td>F187H</td><td>Clears variables and resets memory</td></tr>
+<tr><td><code>CLOAD</code></td><td>F089H</td><td>Loads program from tape</td></tr>
+<tr><td><code>CLS</code></td><td>F088H</td><td>Clears the display</td></tr>
+<tr><td><code>COM$</code></td><td>F858H</td><td>Communicates via serial port</td></tr>
+<tr><td><code>CONSOLE</code></td><td>F0B1H</td><td>Switches to console mode</td></tr>
+<tr><td><code>CONT</code></td><td>F183H</td><td>Continues from a <code>STOP</code> or <code>BREAK</code></td></tr>
+<tr><td><code>COLOR</code></td><td>F0B5H</td><td>Sets display text color</td></tr>
+<tr><td><code>COS</code></td><td>F17EH</td><td>Cosine function</td></tr>
+<tr><td><code>CSAVE</code></td><td>F095H</td><td>Saves program to tape</td></tr>
+<tr><td><code>CSIZE</code></td><td>E680H</td><td>Sets character size for printing</td></tr>
+<tr><td><code>CURSOR</code></td><td>F084H</td><td>Positions cursor</td></tr>
+<tr><td><code>DATA</code></td><td>F18DH</td><td>Holds data for <code>READ</code> statements</td></tr>
+<tr><td><code>DEF</code></td><td>F165H</td><td>Defines a function</td></tr>
+<tr><td><code>DEGREE</code></td><td>F18CH</td><td>Sets angle mode to degrees</td></tr>
+<tr><td><code>DEV$</code></td><td>E857H</td><td>Device name for serial communication</td></tr>
+<tr><td><code>DIM</code></td><td>F179H</td><td>Declares an array with specified dimensions</td></tr>
+<tr><td><code>DMS</code></td><td>F166H</td><td>Degree-minute-second (DMS) conversion</td></tr>
+<tr><td><code>DTE</code></td><td>E884H</td><td>Date function</td></tr>
+<tr><td><code>END</code></td><td>F19EH</td><td>Marks end of program</td></tr>
+<tr><td><code>ERL</code></td><td>F053H</td><td>Returns line number of error</td></tr>
+<tr><td><code>ERN</code></td><td>F052H</td><td>Returns error number</td></tr>
+<tr><td><code>ERROR</code></td><td>F1B4H</td><td>Error handling function</td></tr>
+<tr><td><code>EXP</code></td><td>F176H</td><td>Calculates e^x</td></tr>
+<tr><td><code>FEED</code></td><td>F0B0H</td><td>Paper feed on printer</td></tr>
+<tr><td><code>FOR</code></td><td>F1A5H</td><td>Begins a FOR loop</td></tr>
+<tr><td><code>GCURSOR</code></td><td>F093H</td><td>Graphics cursor control</td></tr>
+<tr><td><code>GLCURSOR</code></td><td>E682H</td><td>Lower graphics cursor control</td></tr>
+<tr><td><code>GOSUB</code></td><td>F194H</td><td>Jumps to subroutine, returning with <code>RETURN</code></td></tr>
+<tr><td><code>GOTO</code></td><td>F192H</td><td>Unconditional jump to a line number</td></tr>
+<tr><td><code>GPRINT</code></td><td>F09F</td><td>Graphics print</td></tr>
+<tr><td><code>GRAD</code></td><td>F186H</td><td>Sets angle mode to gradients</td></tr>
+<tr><td><code>GRAPH</code></td><td>E681H</td><td>Switches to graphics mode</td></tr>
+<tr><td><code>IF</code></td><td>F196H</td><td>Conditional branching</td></tr>
+<tr><td><code>INKEY$</code></td><td>F15CH</td><td>Returns last pressed key</td></tr>
+<tr><td><code>INPUT</code></td><td>F091H</td><td>Takes input from the user</td></tr>
+<tr><td><code>INSTAT</code></td><td>E859F</td><td>Checks input status</td></tr>
+<tr><td><code>INT</code></td><td>F171H</td><td>Converts to integer</td></tr>
+<tr><td><code>LCURSOR</code></td><td>E683H</td><td>Lower cursor control</td></tr>
+<tr><td><code>LEFT$</code></td><td>F17AH</td><td>Returns left substring</td></tr>
+<tr><td><code>LEN</code></td><td>F164H</td><td>Returns length of a string</td></tr>
+<tr><td><code>LET</code></td><td>F198H</td><td>Assigns a value to a variable</td></tr>
+<tr><td><code>LF</code></td><td>F0B6H</td><td>Line feed</td></tr>
+<tr><td><code>LINE</code></td><td>F0B7H</td><td>Draws line in graphics mode</td></tr>
+<tr><td><code>LIST</code></td><td>F090H</td><td>Displays program code</td></tr>
+<tr><td><code>LLIST</code></td><td>F0B8H</td><td>List program to printer</td></tr>
+<tr><td><code>LN</code></td><td>F176H</td><td>Natural logarithm</td></tr>
+<tr><td><code>LOCK</code></td><td>F1B5H</td><td>Locks program for editing</td></tr>
+<tr><td><code>LOG</code></td><td>F177H</td><td>Natural Logarithmic function</td></tr>
+<tr><td><code>LPRINT</code></td><td>F0B9H</td><td>Print to line printer</td></tr>
+<tr><td><code>MEM</code></td><td>F158H</td><td>Displays memory usage</td></tr>
+<tr><td><code>MERGE</code></td><td>F08FH</td><td>Merges another program into current program</td></tr>
+<tr><td><code>MID$</code></td><td>F17BH</td><td>Extracts a substring</td></tr>
+<tr><td><code>NEW</code></td><td>F19BH</td><td>Clears program and data areas</td></tr>
+<tr><td><code>NEXT</code></td><td>F19AH</td><td>Ends a FOR loop</td></tr>
+<tr><td><code>NOT</code></td><td>F16DH</td><td>Logical NOT</td></tr>
+<tr><td><code>OFF</code></td><td>F19EH</td><td>Turns off power (optional in certain models)</td></tr>
+<tr><td><code>ON</code></td><td>F19CH</td><td>Handles events based on specific conditions</td></tr>
+<tr><td><code>OPN</code></td><td>F19DH</td><td>Opens file for I/O</td></tr>
+<tr><td><code>OR</code></td><td>F151H</td><td>Logical OR</td></tr>
+<tr><td><code>OUTSTAT</code></td><td>E880H</td><td>Checks output status</td></tr>
+<tr><td><code>PAUSE</code></td><td>F1A2H</td><td>Pauses program execution</td></tr>
+<tr><td><code>PEEK</code></td><td>F16FH</td><td>Reads data from a memory address</td></tr>
+<tr><td><code>PEEK#</code></td><td>F16EH</td><td>Extended peek for memory data</td></tr>
+<tr><td><code>PI</code></td><td>F15DH</td><td>Returns value of Pi</td></tr>
+<tr><td><code>POINT</code></td><td>F168H</td><td>Returns graphics point color</td></tr>
+<tr><td><code>POKE</code></td><td>F1A1H</td><td>Writes data to a memory address</td></tr>
+<tr><td><code>POKE#</code></td><td>F1A0H</td><td>Extended poke for memory data</td></tr>
+<tr><td><code>PRINT</code></td><td>F097H</td><td>Displays text on screen</td></tr>
+<tr><td><code>RADIAN</code></td><td>F1AAH</td><td>Sets angle mode to radians</td></tr>
+<tr><td><code>RANDOM</code></td><td>F1A8H</td><td>Returns a random number</td></tr>
+<tr><td><code>READ</code></td><td>F1A6H</td><td>Reads data from DATA statements</td></tr>
+<tr><td><code>REM</code></td><td>F1ABH</td><td>Comment statement</td></tr>
+<tr><td><code>RESTORE</code></td><td>F1A7H</td><td>Resets DATA pointer</td></tr>
+<tr><td><code>RETURN</code></td><td>F199H</td><td>Returns from subroutine</td></tr>
+<tr><td><code>RIGHT$</code></td><td>F172H</td><td>Returns right substring</td></tr>
+<tr><td><code>RINKEY$</code></td><td>E85AH</td><td>Reads last input key</td></tr>
+<tr><td><code>RLINE</code></td><td>F0BAH</td><td>Reads a line from printer</td></tr>
+<tr><td><code>RMT</code></td><td>E7A9H</td><td>Remote command for communication</td></tr>
+<tr><td><code>RND</code></td><td>F17CH</td><td>Returns a random number (<code>RANDOM</code>?)</td></tr>
+<tr><td><code>ROTATE</code></td><td>E685H</td><td>Rotates graphics display</td></tr>
+<tr><td><code>RUN</code></td><td>F1A4H</td><td>Starts program execution</td></tr>
+<tr><td><code>SETCOM</code></td><td>E882H</td><td>Sets communication mode</td></tr>
+<tr><td><code>SETDEV</code></td><td>E886</td><td>Sets device configuration</td></tr>
+<tr><td><code>SGN</code></td><td>F179H</td><td>Returns sign of a number</td></tr>
+<tr><td><code>SIN</code></td><td>F17DH</td><td>Sine function</td></tr>
+<tr><td><code>SORGN</code></td><td>E684H</td><td>Sets origin for graphics</td></tr>
+<tr><td><code>SPAVCE$</code></td><td>F061H</td><td>Returns a string of spaces</td></tr>
+<tr><td><code>SQR</code></td><td>F16BH</td><td>Returns the square root of a number</td></tr>
+<tr><td><code>STATUS</code></td><td>F167H</td><td>Displays status information</td></tr>
+<tr><td><code>STEP</code></td><td>F1ADH</td><td>Specifies increment in FOR loop</td></tr>
+<tr><td><code>STOP</code></td><td>F1ACH</td><td>Pauses program</td></tr>
+<tr><td><code>STR$</code></td><td>F161H</td><td>Converts a number to a string</td></tr>
+<tr><td><code>TAB</code></td><td>F0BBH</td><td>Moves cursor to specified position</td></tr>
+<tr><td><code>TAN</code></td><td>F17FH</td><td>Tangent function</td></tr>
+<tr><td><code>TERMINAL</code></td><td>E883H</td><td>Switches to terminal mode</td></tr>
+<tr><td><code>TEST</code></td><td>F0BCH</td><td>Tests condition in program</td></tr>
+<tr><td><code>TEXT</code></td><td>E686H</td><td>Switches to text mode</td></tr>
+<tr><td><code>THEN</code></td><td>F1AEH</td><td>Specifies action if condition in <code>IF</code> is met</td></tr>
+<tr><td><code>TIME</code></td><td>F15BH</td><td>Returns current time</td></tr>
+<tr><td><code>TO</code></td><td>F1B1H</td><td>Specifies range in <code>FOR</code> loop</td></tr>
+<tr><td><code>TRANSMIT</code></td><td>E885H</td><td>Transfers data via serial</td></tr>
+<tr><td><code>TROFF</code></td><td>F1B0H</td><td>Turns trace off</td></tr>
+<tr><td><code>TRON</code></td><td>F1AFH</td><td>Turns trace on</td></tr>
+<tr><td><code>UNLOCK</code></td><td>F1B6H</td><td>Unlocks program for editing</td></tr>
+<tr><td><code>USING</code></td><td>F086H</td><td>Formats output</td></tr>
+<tr><td><code>VAL</code></td><td>F162H</td><td>Converts string to a numeric value</td></tr>
+<tr><td><code>WAIT</code></td><td>F1B3H</td><td>Pauses execution until condition met</td></tr>
+<tr><td><code>ZONE</code></td><td>F0B4H</td><td>Sets tabulation zone for printing</td></tr>
+</tbody></table>
+</div>
+<h2 id="system-subroutines-list"><a class="header" href="#system-subroutines-list">System Subroutines List</a></h2>
+<h3 id="1-character-functions"><a class="header" href="#1-character-functions">1. Character Functions</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Memory Address</th><th>Description</th></tr></thead><tbody>
+<tr><td>Combination of Characters</td><td>D925H</td><td>Combines multiple characters into a single string</td></tr>
+<tr><td>CHR$</td><td>D9B1H</td><td>Converts an ASCII code to its corresponding character</td></tr>
+<tr><td>STR$</td><td>D9CFH</td><td>Converts a string representation of a number back to a numeric value</td></tr>
+<tr><td>VAL</td><td>D9D7H</td><td>Converts a string to a numeric value</td></tr>
+<tr><td>LEN, ASC</td><td>D9DDH</td><td><code>LEN</code>: Returns the length of a string; <code>ASC</code>: Returns ASCII code of a character</td></tr>
+<tr><td>RIGHT$</td><td>D9F3H</td><td>Extracts a specified number of characters from the right end of a string</td></tr>
+<tr><td>MID$</td><td>D9F3H</td><td>Extracts a substring from a string, given a starting position and length</td></tr>
+<tr><td>LEFT$</td><td>D9F3H</td><td>Extracts a specified number of characters from the left end of a string</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="2-arithmetic-operations"><a class="header" href="#2-arithmetic-operations">2. Arithmetic Operations</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Memory Address</th><th>Description</th></tr></thead><tbody>
+<tr><td>Subtract</td><td>EFB6H</td><td>Subtracts one number from another</td></tr>
+<tr><td>Add</td><td>EFBAH</td><td>Adds two numbers</td></tr>
+<tr><td>Multiply</td><td>F01AH</td><td>Multiplies two numbers</td></tr>
+<tr><td>Divide</td><td>F084H</td><td>Divides one number by another</td></tr>
+<tr><td>LN</td><td>F161H</td><td>Computes the natural logarithm of a number</td></tr>
+<tr><td>LOG</td><td>F165H</td><td>Computes the base-10 logarithm of a number</td></tr>
+<tr><td>EXP</td><td>F1CBH</td><td>Calculates the exponential function (e^x)</td></tr>
+<tr><td>10^n</td><td>F1D4H</td><td>Computes 10 raised to the power of a specified exponent</td></tr>
+<tr><td>COS</td><td>F391H</td><td>Computes the cosine of an angle</td></tr>
+<tr><td>TAN</td><td>F39EH</td><td>Computes the tangent of an angle</td></tr>
+<tr><td>SIN</td><td>F3A2H</td><td>Computes the sine of an angle</td></tr>
+<tr><td>ACS</td><td>F492H</td><td>Computes the arc cosine (inverse cosine) of a value</td></tr>
+<tr><td>ATN</td><td>F496H</td><td>Computes the arc tangent (inverse tangent) of a value</td></tr>
+<tr><td>ASN</td><td>F49AH</td><td>Computes the arc sine (inverse sine) of a value</td></tr>
+<tr><td>DEG</td><td>F531H</td><td>Converts a radian measure to degrees</td></tr>
+<tr><td>DMS</td><td>F564H</td><td>Converts a degree measure to degrees, minutes, and seconds</td></tr>
+<tr><td>ABS</td><td>F597H</td><td>Computes the absolute value of a number</td></tr>
+<tr><td>SGN</td><td>F59DH</td><td>Returns the sign of a number (1 for positive, -1 for negative, 0 for zero)</td></tr>
+<tr><td>INT</td><td>F5BEH</td><td>Returns the integer portion of a number, discarding any fractional part</td></tr>
+<tr><td>Power Rise</td><td>F89CH</td><td>Raises a number to a specified power</td></tr>
+</tbody></table>
+</div>
+<h2 id="-3"><a class="header" href="#-3"><img src="basic/./../images/basic/Preparation_String_For_Comparing.png" alt="Arithmetic Operations Table" /></a></h2>
+<h3 id="3-compare"><a class="header" href="#3-compare">3. Compare</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Memory Address</th><th>Description</th></tr></thead><tbody>
+<tr><td>Numerical Comparison</td><td>D0D2H</td><td>Compares two numeric values and returns a result</td></tr>
+<tr><td>Character String Comparison</td><td>D0F9H</td><td>Compares two strings lexicographically to determine order</td></tr>
+</tbody></table>
+</div>
+<h2 id="-4"><a class="header" href="#-4"><img src="basic/./../images/basic/Arithmetic_Subroutines_Table.png" alt="Compare String Memory Content" /></a></h2>
+<h3 id="4-search"><a class="header" href="#4-search">4. Search</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Memory Address</th><th>Description</th></tr></thead><tbody>
+<tr><td>Line number Search</td><td>D2EAH</td><td>Searches for a specific line number in the program</td></tr>
+<tr><td>KEY Scan (1)</td><td>E42CH</td><td>Scans the keyboard to detect key presses; single key detection</td></tr>
+<tr><td>KEY Scan (2)</td><td>E243H</td><td>Scans the keyboard for combinations</td></tr>
+<tr><td>Variable Search</td><td>D461H</td><td>Searches for a variable by name in the program’s memory</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="5-display"><a class="header" href="#5-display">5. Display</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Memory Address</th><th>Description</th></tr></thead><tbody>
+<tr><td>Auto-power-off</td><td>E33FH</td><td>Manages automatic power-off to conserve battery life</td></tr>
+<tr><td>Program display</td><td>E8CAH</td><td>Displays the current program code on the screen</td></tr>
+<tr><td>Graphic Display</td><td>EDEFH</td><td>Enables graphical display mode</td></tr>
+<tr><td>Hexadecimal</td><td>ED95H</td><td>Displays a value in hexadecimal format</td></tr>
+<tr><td>One Character Display</td><td>ED3BH</td><td>Displays a single character at the current position</td></tr>
+<tr><td>Cursor Move After One Character Display</td><td>ED4DH</td><td>Moves the cursor one position after displaying</td></tr>
+<tr><td>Cursor Move After <code>n</code> Character Display</td><td>ED00H</td><td>Moves the cursor by <code>n</code> positions after displaying</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="6-printer-related"><a class="header" href="#6-printer-related">6. Printer Related</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Memory Address</th><th>Description</th></tr></thead><tbody>
+<tr><td>Color Designation</td><td>A519H</td><td>Sets the color for subsequent text or graphics display</td></tr>
+<tr><td>Print</td><td>A781H</td><td>Sends data to be printed</td></tr>
+<tr><td>Linefeed</td><td>A9F1H</td><td>Moves the cursor or paper to the next line</td></tr>
+<tr><td>Paper Feed</td><td>AA04H</td><td>Advances the paper on a connected printer</td></tr>
+<tr><td>Get <code>TEXT</code> Mode Ready</td><td>ACBBH</td><td>Prepares the system for text mode</td></tr>
+<tr><td>Pen Up/Down</td><td>AAE3H</td><td>Raises or lowers the pen for drawing or plotting</td></tr>
+<tr><td>Motor Drive</td><td>A8DDH</td><td>Activates the motor for peripherals like printers</td></tr>
+<tr><td>Motor Off</td><td>A769H</td><td>Turns off the motor</td></tr>
+<tr><td>Get <code>GRAPHIC</code> Mode Ready</td><td>ABEFH</td><td>Prepares the system for graphics mode</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="7-cassette-tape"><a class="header" href="#7-cassette-tape">7. Cassette Tape</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Memory Address</th><th>Description</th></tr></thead><tbody>
+<tr><td>Remote On</td><td>BF11H</td><td>Activates remote mode for external control or communication</td></tr>
+<tr><td>Remote Off</td><td>BF43H</td><td>Deactivates remote mode</td></tr>
+<tr><td>One Character Save</td><td>BDCCH</td><td>Saves a single character to memory or storage</td></tr>
+<tr><td>One Character Load</td><td>BDF0H</td><td>Loads a single character from memory or storage</td></tr>
+<tr><td>Header Input/Output</td><td>BCE8H</td><td>Manages input/output operations for data headers</td></tr>
+<tr><td>CMT I/O Control</td><td>BBF5H</td><td>Controls cassette tape (CMT) input/output functions</td></tr>
+<tr><td>Create Header</td><td>BBD6H</td><td>Generates a data header for file storage or transmission</td></tr>
+<tr><td>Transfer File</td><td>BD3CH</td><td>Transfers a file between devices or storage media</td></tr>
+</tbody></table>
+</div>
+<hr />
+<div style="break-before: page; page-break-before: always;"></div><h1 id="assembly"><a class="header" href="#assembly">Assembly</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="memory"><a class="header" href="#memory">Memory</a></h1>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>

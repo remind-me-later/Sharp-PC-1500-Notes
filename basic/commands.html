@@ -1,0 +1,447 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Commands</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="first-steps.html"><strong aria-hidden="true">1.</strong> First steps</a></li><li class="chapter-item expanded "><a href="basic/index.html"><strong aria-hidden="true">2.</strong> The BASIC programming language</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="basic/expressions.html"><strong aria-hidden="true">2.1.</strong> Expressions</a></li><li class="chapter-item expanded "><a href="basic/statements.html"><strong aria-hidden="true">2.2.</strong> Statements</a></li><li class="chapter-item expanded "><a href="basic/io.html"><strong aria-hidden="true">2.3.</strong> Basic IO</a></li><li class="chapter-item expanded "><a href="basic/control_flow.html"><strong aria-hidden="true">2.4.</strong> Control flow</a></li><li class="chapter-item expanded "><a href="basic/functions.html"><strong aria-hidden="true">2.5.</strong> Functions</a></li><li class="chapter-item expanded "><a href="basic/grammar.html"><strong aria-hidden="true">2.6.</strong> Grammar</a></li><li class="chapter-item expanded "><a href="basic/variables_and_program.html"><strong aria-hidden="true">2.7.</strong> Variables and Program Expression</a></li><li class="chapter-item expanded "><a href="basic/commands.html"><strong aria-hidden="true">2.8.</strong> Commands</a></li></ol></li><li class="chapter-item expanded "><a href="assembly.html"><strong aria-hidden="true">3.</strong> Assembly</a></li><li class="chapter-item expanded "><a href="memory.html"><strong aria-hidden="true">4.</strong> Memory</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="basic-commands-and-memory-address"><a class="header" href="#basic-commands-and-memory-address">BASIC Commands and Memory Address</a></h1>
+<h2 id="basic-command-list"><a class="header" href="#basic-command-list">BASIC Command List:</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Command</th><th>Internal Code</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>ABS</code></td><td>F170H</td><td>Returns absolute value of a number</td></tr>
+<tr><td><code>ACS</code></td><td>F174H</td><td>Arc cosine function</td></tr>
+<tr><td><code>AND</code></td><td>F150H</td><td>Logical AND operation</td></tr>
+<tr><td><code>AREAD</code></td><td>F18OH</td><td>Reads analog input</td></tr>
+<tr><td><code>ARUN</code></td><td>F181H</td><td>Auto-run a program</td></tr>
+<tr><td><code>ASC</code></td><td>F160H</td><td>Returns ASCII code of a character</td></tr>
+<tr><td><code>ASN</code></td><td>F173H</td><td>Arc sine function</td></tr>
+<tr><td><code>ATN</code></td><td>F175H</td><td>Arc tangent function</td></tr>
+<tr><td><code>BEEP</code></td><td>F182H</td><td>Produces a sound from the device speaker</td></tr>
+<tr><td><code>BREAK</code></td><td>F0B3H</td><td>Interrupts program execution</td></tr>
+<tr><td><code>CALL</code></td><td>F18AH</td><td>Calls a machine language subroutine</td></tr>
+<tr><td><code>CHAIN</code></td><td>F0B2H</td><td>Links to another program</td></tr>
+<tr><td><code>CHR$</code></td><td>F163H</td><td>Converts ASCII code to character</td></tr>
+<tr><td><code>CLEAR</code></td><td>F187H</td><td>Clears variables and resets memory</td></tr>
+<tr><td><code>CLOAD</code></td><td>F089H</td><td>Loads program from tape</td></tr>
+<tr><td><code>CLS</code></td><td>F088H</td><td>Clears the display</td></tr>
+<tr><td><code>COM$</code></td><td>F858H</td><td>Communicates via serial port</td></tr>
+<tr><td><code>CONSOLE</code></td><td>F0B1H</td><td>Switches to console mode</td></tr>
+<tr><td><code>CONT</code></td><td>F183H</td><td>Continues from a <code>STOP</code> or <code>BREAK</code></td></tr>
+<tr><td><code>COLOR</code></td><td>F0B5H</td><td>Sets display text color</td></tr>
+<tr><td><code>COS</code></td><td>F17EH</td><td>Cosine function</td></tr>
+<tr><td><code>CSAVE</code></td><td>F095H</td><td>Saves program to tape</td></tr>
+<tr><td><code>CSIZE</code></td><td>E680H</td><td>Sets character size for printing</td></tr>
+<tr><td><code>CURSOR</code></td><td>F084H</td><td>Positions cursor</td></tr>
+<tr><td><code>DATA</code></td><td>F18DH</td><td>Holds data for <code>READ</code> statements</td></tr>
+<tr><td><code>DEF</code></td><td>F165H</td><td>Defines a function</td></tr>
+<tr><td><code>DEGREE</code></td><td>F18CH</td><td>Sets angle mode to degrees</td></tr>
+<tr><td><code>DEV$</code></td><td>E857H</td><td>Device name for serial communication</td></tr>
+<tr><td><code>DIM</code></td><td>F179H</td><td>Declares an array with specified dimensions</td></tr>
+<tr><td><code>DMS</code></td><td>F166H</td><td>Degree-minute-second (DMS) conversion</td></tr>
+<tr><td><code>DTE</code></td><td>E884H</td><td>Date function</td></tr>
+<tr><td><code>END</code></td><td>F19EH</td><td>Marks end of program</td></tr>
+<tr><td><code>ERL</code></td><td>F053H</td><td>Returns line number of error</td></tr>
+<tr><td><code>ERN</code></td><td>F052H</td><td>Returns error number</td></tr>
+<tr><td><code>ERROR</code></td><td>F1B4H</td><td>Error handling function</td></tr>
+<tr><td><code>EXP</code></td><td>F176H</td><td>Calculates e^x</td></tr>
+<tr><td><code>FEED</code></td><td>F0B0H</td><td>Paper feed on printer</td></tr>
+<tr><td><code>FOR</code></td><td>F1A5H</td><td>Begins a FOR loop</td></tr>
+<tr><td><code>GCURSOR</code></td><td>F093H</td><td>Graphics cursor control</td></tr>
+<tr><td><code>GLCURSOR</code></td><td>E682H</td><td>Lower graphics cursor control</td></tr>
+<tr><td><code>GOSUB</code></td><td>F194H</td><td>Jumps to subroutine, returning with <code>RETURN</code></td></tr>
+<tr><td><code>GOTO</code></td><td>F192H</td><td>Unconditional jump to a line number</td></tr>
+<tr><td><code>GPRINT</code></td><td>F09F</td><td>Graphics print</td></tr>
+<tr><td><code>GRAD</code></td><td>F186H</td><td>Sets angle mode to gradients</td></tr>
+<tr><td><code>GRAPH</code></td><td>E681H</td><td>Switches to graphics mode</td></tr>
+<tr><td><code>IF</code></td><td>F196H</td><td>Conditional branching</td></tr>
+<tr><td><code>INKEY$</code></td><td>F15CH</td><td>Returns last pressed key</td></tr>
+<tr><td><code>INPUT</code></td><td>F091H</td><td>Takes input from the user</td></tr>
+<tr><td><code>INSTAT</code></td><td>E859F</td><td>Checks input status</td></tr>
+<tr><td><code>INT</code></td><td>F171H</td><td>Converts to integer</td></tr>
+<tr><td><code>LCURSOR</code></td><td>E683H</td><td>Lower cursor control</td></tr>
+<tr><td><code>LEFT$</code></td><td>F17AH</td><td>Returns left substring</td></tr>
+<tr><td><code>LEN</code></td><td>F164H</td><td>Returns length of a string</td></tr>
+<tr><td><code>LET</code></td><td>F198H</td><td>Assigns a value to a variable</td></tr>
+<tr><td><code>LF</code></td><td>F0B6H</td><td>Line feed</td></tr>
+<tr><td><code>LINE</code></td><td>F0B7H</td><td>Draws line in graphics mode</td></tr>
+<tr><td><code>LIST</code></td><td>F090H</td><td>Displays program code</td></tr>
+<tr><td><code>LLIST</code></td><td>F0B8H</td><td>List program to printer</td></tr>
+<tr><td><code>LN</code></td><td>F176H</td><td>Natural logarithm</td></tr>
+<tr><td><code>LOCK</code></td><td>F1B5H</td><td>Locks program for editing</td></tr>
+<tr><td><code>LOG</code></td><td>F177H</td><td>Natural Logarithmic function</td></tr>
+<tr><td><code>LPRINT</code></td><td>F0B9H</td><td>Print to line printer</td></tr>
+<tr><td><code>MEM</code></td><td>F158H</td><td>Displays memory usage</td></tr>
+<tr><td><code>MERGE</code></td><td>F08FH</td><td>Merges another program into current program</td></tr>
+<tr><td><code>MID$</code></td><td>F17BH</td><td>Extracts a substring</td></tr>
+<tr><td><code>NEW</code></td><td>F19BH</td><td>Clears program and data areas</td></tr>
+<tr><td><code>NEXT</code></td><td>F19AH</td><td>Ends a FOR loop</td></tr>
+<tr><td><code>NOT</code></td><td>F16DH</td><td>Logical NOT</td></tr>
+<tr><td><code>OFF</code></td><td>F19EH</td><td>Turns off power (optional in certain models)</td></tr>
+<tr><td><code>ON</code></td><td>F19CH</td><td>Handles events based on specific conditions</td></tr>
+<tr><td><code>OPN</code></td><td>F19DH</td><td>Opens file for I/O</td></tr>
+<tr><td><code>OR</code></td><td>F151H</td><td>Logical OR</td></tr>
+<tr><td><code>OUTSTAT</code></td><td>E880H</td><td>Checks output status</td></tr>
+<tr><td><code>PAUSE</code></td><td>F1A2H</td><td>Pauses program execution</td></tr>
+<tr><td><code>PEEK</code></td><td>F16FH</td><td>Reads data from a memory address</td></tr>
+<tr><td><code>PEEK#</code></td><td>F16EH</td><td>Extended peek for memory data</td></tr>
+<tr><td><code>PI</code></td><td>F15DH</td><td>Returns value of Pi</td></tr>
+<tr><td><code>POINT</code></td><td>F168H</td><td>Returns graphics point color</td></tr>
+<tr><td><code>POKE</code></td><td>F1A1H</td><td>Writes data to a memory address</td></tr>
+<tr><td><code>POKE#</code></td><td>F1A0H</td><td>Extended poke for memory data</td></tr>
+<tr><td><code>PRINT</code></td><td>F097H</td><td>Displays text on screen</td></tr>
+<tr><td><code>RADIAN</code></td><td>F1AAH</td><td>Sets angle mode to radians</td></tr>
+<tr><td><code>RANDOM</code></td><td>F1A8H</td><td>Returns a random number</td></tr>
+<tr><td><code>READ</code></td><td>F1A6H</td><td>Reads data from DATA statements</td></tr>
+<tr><td><code>REM</code></td><td>F1ABH</td><td>Comment statement</td></tr>
+<tr><td><code>RESTORE</code></td><td>F1A7H</td><td>Resets DATA pointer</td></tr>
+<tr><td><code>RETURN</code></td><td>F199H</td><td>Returns from subroutine</td></tr>
+<tr><td><code>RIGHT$</code></td><td>F172H</td><td>Returns right substring</td></tr>
+<tr><td><code>RINKEY$</code></td><td>E85AH</td><td>Reads last input key</td></tr>
+<tr><td><code>RLINE</code></td><td>F0BAH</td><td>Reads a line from printer</td></tr>
+<tr><td><code>RMT</code></td><td>E7A9H</td><td>Remote command for communication</td></tr>
+<tr><td><code>RND</code></td><td>F17CH</td><td>Returns a random number (<code>RANDOM</code>?)</td></tr>
+<tr><td><code>ROTATE</code></td><td>E685H</td><td>Rotates graphics display</td></tr>
+<tr><td><code>RUN</code></td><td>F1A4H</td><td>Starts program execution</td></tr>
+<tr><td><code>SETCOM</code></td><td>E882H</td><td>Sets communication mode</td></tr>
+<tr><td><code>SETDEV</code></td><td>E886</td><td>Sets device configuration</td></tr>
+<tr><td><code>SGN</code></td><td>F179H</td><td>Returns sign of a number</td></tr>
+<tr><td><code>SIN</code></td><td>F17DH</td><td>Sine function</td></tr>
+<tr><td><code>SORGN</code></td><td>E684H</td><td>Sets origin for graphics</td></tr>
+<tr><td><code>SPAVCE$</code></td><td>F061H</td><td>Returns a string of spaces</td></tr>
+<tr><td><code>SQR</code></td><td>F16BH</td><td>Returns the square root of a number</td></tr>
+<tr><td><code>STATUS</code></td><td>F167H</td><td>Displays status information</td></tr>
+<tr><td><code>STEP</code></td><td>F1ADH</td><td>Specifies increment in FOR loop</td></tr>
+<tr><td><code>STOP</code></td><td>F1ACH</td><td>Pauses program</td></tr>
+<tr><td><code>STR$</code></td><td>F161H</td><td>Converts a number to a string</td></tr>
+<tr><td><code>TAB</code></td><td>F0BBH</td><td>Moves cursor to specified position</td></tr>
+<tr><td><code>TAN</code></td><td>F17FH</td><td>Tangent function</td></tr>
+<tr><td><code>TERMINAL</code></td><td>E883H</td><td>Switches to terminal mode</td></tr>
+<tr><td><code>TEST</code></td><td>F0BCH</td><td>Tests condition in program</td></tr>
+<tr><td><code>TEXT</code></td><td>E686H</td><td>Switches to text mode</td></tr>
+<tr><td><code>THEN</code></td><td>F1AEH</td><td>Specifies action if condition in <code>IF</code> is met</td></tr>
+<tr><td><code>TIME</code></td><td>F15BH</td><td>Returns current time</td></tr>
+<tr><td><code>TO</code></td><td>F1B1H</td><td>Specifies range in <code>FOR</code> loop</td></tr>
+<tr><td><code>TRANSMIT</code></td><td>E885H</td><td>Transfers data via serial</td></tr>
+<tr><td><code>TROFF</code></td><td>F1B0H</td><td>Turns trace off</td></tr>
+<tr><td><code>TRON</code></td><td>F1AFH</td><td>Turns trace on</td></tr>
+<tr><td><code>UNLOCK</code></td><td>F1B6H</td><td>Unlocks program for editing</td></tr>
+<tr><td><code>USING</code></td><td>F086H</td><td>Formats output</td></tr>
+<tr><td><code>VAL</code></td><td>F162H</td><td>Converts string to a numeric value</td></tr>
+<tr><td><code>WAIT</code></td><td>F1B3H</td><td>Pauses execution until condition met</td></tr>
+<tr><td><code>ZONE</code></td><td>F0B4H</td><td>Sets tabulation zone for printing</td></tr>
+</tbody></table>
+</div>
+<h2 id="system-subroutines-list"><a class="header" href="#system-subroutines-list">System Subroutines List</a></h2>
+<h3 id="1-character-functions"><a class="header" href="#1-character-functions">1. Character Functions</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Memory Address</th><th>Description</th></tr></thead><tbody>
+<tr><td>Combination of Characters</td><td>D925H</td><td>Combines multiple characters into a single string</td></tr>
+<tr><td>CHR$</td><td>D9B1H</td><td>Converts an ASCII code to its corresponding character</td></tr>
+<tr><td>STR$</td><td>D9CFH</td><td>Converts a string representation of a number back to a numeric value</td></tr>
+<tr><td>VAL</td><td>D9D7H</td><td>Converts a string to a numeric value</td></tr>
+<tr><td>LEN, ASC</td><td>D9DDH</td><td><code>LEN</code>: Returns the length of a string; <code>ASC</code>: Returns ASCII code of a character</td></tr>
+<tr><td>RIGHT$</td><td>D9F3H</td><td>Extracts a specified number of characters from the right end of a string</td></tr>
+<tr><td>MID$</td><td>D9F3H</td><td>Extracts a substring from a string, given a starting position and length</td></tr>
+<tr><td>LEFT$</td><td>D9F3H</td><td>Extracts a specified number of characters from the left end of a string</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="2-arithmetic-operations"><a class="header" href="#2-arithmetic-operations">2. Arithmetic Operations</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Memory Address</th><th>Description</th></tr></thead><tbody>
+<tr><td>Subtract</td><td>EFB6H</td><td>Subtracts one number from another</td></tr>
+<tr><td>Add</td><td>EFBAH</td><td>Adds two numbers</td></tr>
+<tr><td>Multiply</td><td>F01AH</td><td>Multiplies two numbers</td></tr>
+<tr><td>Divide</td><td>F084H</td><td>Divides one number by another</td></tr>
+<tr><td>LN</td><td>F161H</td><td>Computes the natural logarithm of a number</td></tr>
+<tr><td>LOG</td><td>F165H</td><td>Computes the base-10 logarithm of a number</td></tr>
+<tr><td>EXP</td><td>F1CBH</td><td>Calculates the exponential function (e^x)</td></tr>
+<tr><td>10^n</td><td>F1D4H</td><td>Computes 10 raised to the power of a specified exponent</td></tr>
+<tr><td>COS</td><td>F391H</td><td>Computes the cosine of an angle</td></tr>
+<tr><td>TAN</td><td>F39EH</td><td>Computes the tangent of an angle</td></tr>
+<tr><td>SIN</td><td>F3A2H</td><td>Computes the sine of an angle</td></tr>
+<tr><td>ACS</td><td>F492H</td><td>Computes the arc cosine (inverse cosine) of a value</td></tr>
+<tr><td>ATN</td><td>F496H</td><td>Computes the arc tangent (inverse tangent) of a value</td></tr>
+<tr><td>ASN</td><td>F49AH</td><td>Computes the arc sine (inverse sine) of a value</td></tr>
+<tr><td>DEG</td><td>F531H</td><td>Converts a radian measure to degrees</td></tr>
+<tr><td>DMS</td><td>F564H</td><td>Converts a degree measure to degrees, minutes, and seconds</td></tr>
+<tr><td>ABS</td><td>F597H</td><td>Computes the absolute value of a number</td></tr>
+<tr><td>SGN</td><td>F59DH</td><td>Returns the sign of a number (1 for positive, -1 for negative, 0 for zero)</td></tr>
+<tr><td>INT</td><td>F5BEH</td><td>Returns the integer portion of a number, discarding any fractional part</td></tr>
+<tr><td>Power Rise</td><td>F89CH</td><td>Raises a number to a specified power</td></tr>
+</tbody></table>
+</div>
+<h2 id=""><a class="header" href="#"><img src="./../images/basic/Preparation_String_For_Comparing.png" alt="Arithmetic Operations Table" /></a></h2>
+<h3 id="3-compare"><a class="header" href="#3-compare">3. Compare</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Memory Address</th><th>Description</th></tr></thead><tbody>
+<tr><td>Numerical Comparison</td><td>D0D2H</td><td>Compares two numeric values and returns a result</td></tr>
+<tr><td>Character String Comparison</td><td>D0F9H</td><td>Compares two strings lexicographically to determine order</td></tr>
+</tbody></table>
+</div>
+<h2 id="-1"><a class="header" href="#-1"><img src="./../images/basic/Arithmetic_Subroutines_Table.png" alt="Compare String Memory Content" /></a></h2>
+<h3 id="4-search"><a class="header" href="#4-search">4. Search</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Memory Address</th><th>Description</th></tr></thead><tbody>
+<tr><td>Line number Search</td><td>D2EAH</td><td>Searches for a specific line number in the program</td></tr>
+<tr><td>KEY Scan (1)</td><td>E42CH</td><td>Scans the keyboard to detect key presses; single key detection</td></tr>
+<tr><td>KEY Scan (2)</td><td>E243H</td><td>Scans the keyboard for combinations</td></tr>
+<tr><td>Variable Search</td><td>D461H</td><td>Searches for a variable by name in the program’s memory</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="5-display"><a class="header" href="#5-display">5. Display</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Memory Address</th><th>Description</th></tr></thead><tbody>
+<tr><td>Auto-power-off</td><td>E33FH</td><td>Manages automatic power-off to conserve battery life</td></tr>
+<tr><td>Program display</td><td>E8CAH</td><td>Displays the current program code on the screen</td></tr>
+<tr><td>Graphic Display</td><td>EDEFH</td><td>Enables graphical display mode</td></tr>
+<tr><td>Hexadecimal</td><td>ED95H</td><td>Displays a value in hexadecimal format</td></tr>
+<tr><td>One Character Display</td><td>ED3BH</td><td>Displays a single character at the current position</td></tr>
+<tr><td>Cursor Move After One Character Display</td><td>ED4DH</td><td>Moves the cursor one position after displaying</td></tr>
+<tr><td>Cursor Move After <code>n</code> Character Display</td><td>ED00H</td><td>Moves the cursor by <code>n</code> positions after displaying</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="6-printer-related"><a class="header" href="#6-printer-related">6. Printer Related</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Memory Address</th><th>Description</th></tr></thead><tbody>
+<tr><td>Color Designation</td><td>A519H</td><td>Sets the color for subsequent text or graphics display</td></tr>
+<tr><td>Print</td><td>A781H</td><td>Sends data to be printed</td></tr>
+<tr><td>Linefeed</td><td>A9F1H</td><td>Moves the cursor or paper to the next line</td></tr>
+<tr><td>Paper Feed</td><td>AA04H</td><td>Advances the paper on a connected printer</td></tr>
+<tr><td>Get <code>TEXT</code> Mode Ready</td><td>ACBBH</td><td>Prepares the system for text mode</td></tr>
+<tr><td>Pen Up/Down</td><td>AAE3H</td><td>Raises or lowers the pen for drawing or plotting</td></tr>
+<tr><td>Motor Drive</td><td>A8DDH</td><td>Activates the motor for peripherals like printers</td></tr>
+<tr><td>Motor Off</td><td>A769H</td><td>Turns off the motor</td></tr>
+<tr><td>Get <code>GRAPHIC</code> Mode Ready</td><td>ABEFH</td><td>Prepares the system for graphics mode</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="7-cassette-tape"><a class="header" href="#7-cassette-tape">7. Cassette Tape</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Memory Address</th><th>Description</th></tr></thead><tbody>
+<tr><td>Remote On</td><td>BF11H</td><td>Activates remote mode for external control or communication</td></tr>
+<tr><td>Remote Off</td><td>BF43H</td><td>Deactivates remote mode</td></tr>
+<tr><td>One Character Save</td><td>BDCCH</td><td>Saves a single character to memory or storage</td></tr>
+<tr><td>One Character Load</td><td>BDF0H</td><td>Loads a single character from memory or storage</td></tr>
+<tr><td>Header Input/Output</td><td>BCE8H</td><td>Manages input/output operations for data headers</td></tr>
+<tr><td>CMT I/O Control</td><td>BBF5H</td><td>Controls cassette tape (CMT) input/output functions</td></tr>
+<tr><td>Create Header</td><td>BBD6H</td><td>Generates a data header for file storage or transmission</td></tr>
+<tr><td>Transfer File</td><td>BD3CH</td><td>Transfers a file between devices or storage media</td></tr>
+</tbody></table>
+</div>
+<hr />
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../basic/variables_and_program.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../assembly.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../basic/variables_and_program.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../assembly.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
